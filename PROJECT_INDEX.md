@@ -1,0 +1,80 @@
+# 项目目录索引
+
+这个文件帮你快速理解每个目录是干什么的。
+
+## 先看这里
+
+- `README.md`：项目介绍，说明 FORGE Lite 是什么、怎么用。
+- `QUICKSTART.md`：clone 后快速配置和跑通第一个任务。
+- `AGENTS.template.md`：Agent 指令模板，以后可以复制到具体项目里使用。
+- `FORGE Lite开源版定位与语言策略.md`：开源版的定位、边界和语言策略。
+- `RELEASE_CHECKLIST.md`：发布到 GitHub 前的检查清单。
+
+## 配置示例
+
+- `config.example/product-context.example.md`：产品背景配置模板。
+- `config.example/knowledge-base.example.yaml`：知识库配置示例。
+- `config.example/codebase.example.yaml`：代码库配置示例。
+- `config.example/rubric.example.yaml`：私有 Rubric 扩展配置示例。
+
+真实配置以后应该放在 `config/` 里，并且不要提交到 GitHub。
+
+## 工作流
+
+- `workflows/end-to-end-prd.md`：从需求到 PRD 的完整流程。
+- `workflows/single-module-task.md`：只做一个模块任务时使用。
+- `workflows/review-and-retrospective.md`：审计、返工、复盘时使用。
+
+## 能力模块
+
+- `modules/demand-understanding.md`：需求理解。
+- `modules/product-current-state.md`：产品现状理解。
+- `modules/reverse-engineering.md`：逆向工程。
+- `modules/data-analysis-decision.md`：数据分析判断。
+- `modules/competitor-analysis.md`：竞品分析。
+- `modules/solution-design.md`：方案设计。
+- `modules/prototype-preparation.md`：原型设计准备。
+- `modules/prd-generation.md`：PRD 生成。
+- `modules/review-and-learning.md`：审计与经验沉淀。
+
+## 通用 Rubric
+
+- `rubrics/direction-gate.md`：方向门禁检查。
+- `rubrics/product-logic-generic.md`：通用产品逻辑检查。
+- `rubrics/prd-quality.md`：PRD 质量检查。
+- `rubrics/writing-quality.md`：表达质量检查。
+
+## 模板
+
+- `templates/design-plan.md`：设计计划模板。
+- `templates/current-state.md`：当前状态模板。
+- `templates/reverse-engineering-summary.md`：逆向工程总结模板。
+- `templates/solution-design.md`：方案设计模板。
+- `templates/product-design-brief.md`：原型设计 Brief 模板。
+- `templates/prd.md`：PRD 模板。
+
+## 文档
+
+- `docs/concepts.md`：核心概念说明。
+- `docs/configuration-guide.md`：配置说明。
+- `docs/collaboration-guide.md`：协作方式说明。
+- `docs/open-source-checklist.md`：第一次 GitHub 开源注意事项。
+- `docs/faq.md`：常见问题。
+
+## GitHub 开源文件
+
+- `LICENSE`：MIT 开源协议。
+- `CONTRIBUTING.md`：贡献说明。
+- `SECURITY.md`：安全和敏感信息报告说明。
+- `CODE_OF_CONDUCT.md`：行为准则。
+- `.github/ISSUE_TEMPLATE/`：Issue 模板。
+- `.github/pull_request_template.md`：PR 模板。
+
+## 示例
+
+- `examples/fictional-product/README.md`：虚构产品 TaskBoard 示例。
+
+## 为什么文件名还是英文
+
+文件名保留英文是为了以后开源到 GitHub 时更通用，也方便其他工具识别。  
+但正文可以中文优先，等框架稳定后再补英文版。

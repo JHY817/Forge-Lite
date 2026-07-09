@@ -1,0 +1,23 @@
+# Rubric 配置示例
+# 使用方式：复制为 config/rubric.yaml，然后替换占位内容。
+
+rubric_extensions:
+  product_logic:
+    enabled: true
+    custom_files:
+      - "<你的私有产品逻辑 Rubric 文件路径>"
+
+  writing_style:
+    enabled: true
+    custom_files:
+      - "<你的私有表达规范文件路径>"
+
+  design_system:
+    enabled: false
+    custom_files:
+      - "<你的私有设计系统规则文件路径>"
+
+rules:
+  public_rubrics_are_generic: true
+  business_specific_rubrics_stay_private: true
+  rubric_checks_do_not_create_requirements_by_themselves: true

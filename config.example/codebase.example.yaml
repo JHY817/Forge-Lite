@@ -1,0 +1,27 @@
+# 代码库配置示例
+# 使用方式：复制为 config/codebase.yaml，然后替换占位内容。
+
+repositories:
+  - name: frontend
+    path: "<你的前端仓库路径>"
+    description: "前端应用仓库。"
+    default_search_hints:
+      - "routes"
+      - "components"
+      - "state"
+      - "api"
+
+  - name: backend
+    path: "<你的后端仓库路径>"
+    description: "后端服务仓库。"
+    default_search_hints:
+      - "controllers"
+      - "services"
+      - "models"
+      - "permissions"
+
+reverse_engineering_rules:
+  read_before_claiming: true
+  separate_code_facts_from_product_decisions: true
+  record_unknowns: true
+  avoid_large_unfocused_repository_scans: true

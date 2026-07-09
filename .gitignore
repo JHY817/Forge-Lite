@@ -1,0 +1,16 @@
+.DS_Store
+**/.DS_Store
+AGENTS.md
+node_modules/
+.env
+.env.*
+dist/
+build/
+.cache/
+tmp/
+temp/
+coverage/
+config/
+private/
+learning/
+*.log

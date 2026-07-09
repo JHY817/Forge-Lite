@@ -1,0 +1,23 @@
+# 知识库配置示例
+# 使用方式：复制为 config/knowledge-base.yaml，然后替换占位内容。
+
+knowledge_sources:
+  - name: product_docs
+    type: local_folder
+    path: "<你的产品文档目录>"
+    description: "产品说明、帮助文档、历史 PRD 或需求文档。"
+
+  - name: design_docs
+    type: local_folder
+    path: "<你的设计文档目录>"
+    description: "设计规范、交互说明、组件规则或原型说明。"
+
+  - name: public_docs
+    type: url
+    url: "<公开文档地址>"
+    description: "公开帮助中心、开发者文档或支持中心。"
+
+rules:
+  verify_before_claiming: true
+  mark_unknowns_explicitly: true
+  do_not_treat_old_drafts_as_current_truth: true

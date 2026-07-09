@@ -1,0 +1,28 @@
+# 模板配置示例
+# 使用方式：复制为 config/templates.yaml，然后替换占位内容。
+
+templates:
+  design_plan:
+    path: "templates/design-plan.md"
+    description: "设计计划模板。"
+
+  current_state:
+    path: "templates/current-state.md"
+    description: "当前状态模板。"
+
+  solution_design:
+    path: "templates/solution-design.md"
+    description: "方案设计模板。"
+
+  product_design_brief:
+    path: "templates/product-design-brief.md"
+    description: "原型设计 Brief 模板。"
+
+  prd:
+    path: "templates/prd.md"
+    description: "默认 PRD 模板。可以替换为你自己的 PRD 模板路径。"
+
+rules:
+  use_team_template_when_configured: true
+  keep_facts_decisions_assumptions_and_open_questions_separated: true
+  do_not_hide_unknowns_in_final_documents: true
