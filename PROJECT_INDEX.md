@@ -24,6 +24,9 @@
 - `workflows/end-to-end-prd.md`：从需求到 PRD 的完整流程。
 - `workflows/single-module-task.md`：只做一个模块任务时使用。
 - `workflows/review-and-retrospective.md`：审计、返工、复盘时使用。
+- `workflows/runtime-state.md`：阶段状态、迁移、回退失效和恢复。
+- `workflows/context-and-evidence.md`：阶段上下文、事实分级和信息对齐。
+- `workflows/approval-and-parallelism.md`：auto / notify / approve 和受控并行。
 
 ## 能力模块
 
@@ -43,6 +46,9 @@
 - `rubrics/product-logic-generic.md`：通用产品逻辑检查。
 - `rubrics/prd-quality.md`：PRD 质量检查。
 - `rubrics/writing-quality.md`：表达质量检查。
+- `rubrics/issue-severity.md`：P0/P1/P2、停止条件和复审范围。
+- `rubrics/reverse-engineering-quality.md`：逆向事实强度和证据质量。
+- `rubrics/prototype-output-quality.md`：通用原型输出保真、状态和 QA 验收。
 
 ## 模板
 
@@ -52,6 +58,7 @@
 - `templates/solution-design.md`：方案设计模板。
 - `templates/product-design-brief.md`：原型设计 Brief 模板。
 - `templates/prd.md`：PRD 模板。
+- `templates/stage-handoff.md`：阶段交接模板。
 
 ## 文档
 
@@ -60,6 +67,15 @@
 - `docs/collaboration-guide.md`：协作方式说明。
 - `docs/open-source-checklist.md`：第一次 GitHub 开源注意事项。
 - `docs/faq.md`：常见问题。
+- `docs/rule-ownership.md`：规则唯一来源和去重边界。
+
+## Eval
+
+- `evals/README.md`：评测目的和执行原则。
+- `evals/scoring.md`：通用评分标准。
+- `evals/cases/template.md`：评测案例模板。
+- `evals/cases/generic-regression-cases.md`：不含真实业务信息的通用回归案例。
+- `evals/records.md`：append-only 评测记录。
 
 ## GitHub 开源文件
 

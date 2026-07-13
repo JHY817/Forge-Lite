@@ -1,34 +1,76 @@
 # 当前状态模板
 
-## 当前阶段
+> schema_version: 1.0
+> created_at: YYYY-MM-DD
+> updated_at: YYYY-MM-DD
 
-- 当前阶段：
-- 主产物：
-- 更新时间：
+## 运行状态
 
-## 主结论
+| 字段 | 内容 |
+|---|---|
+| 任务类型 | 新迭代 / 已有迭代 / 单模块 / 审计 / 复盘 |
+| 工作量等级 | small / medium / large |
+| 决策风险 | low / medium / high |
+| 当前阶段 |  |
+| 当前状态 | 使用 `workflows/runtime-state.md` 中的合法值 |
+| 当前门禁 | auto / notify / approve |
 
-- 结论 1：
-- 结论 2：
-- 结论 3：
+## 本期边界
 
-## 可信来源
+### 本期解决
 
-- 来源：
-- 可信原因：
+-
 
-## 废弃或不可信材料
+### 本期不解决
 
-- 材料：
-- 不可信原因：
+-
 
-## 待确认问题
+## 当前主结论
 
-- 问题：
-- 负责人：
-- 需要在什么阶段前确认：
+-
+
+## 已确认事实与证据
+
+| fact_id | 类型 | 事实 | 证据 | 状态 |
+|---|---|---|---|---|
+| F-001 | product / code / data / user |  |  | confirmed / conflict / unverified |
+
+## 当前主产物
+
+| 类型 | 文件 | 状态 | 用途 |
+|---|---|---|---|
+|  |  | in_progress / confirmed / completed |  |
+
+## 失效与历史产物
+
+| 文件或结论 | 状态 | 失效原因 | 可否作为事实来源 |
+|---|---|---|---|
+|  | superseded / archived |  | 是 / 否 / 仅历史追溯 |
+
+## 冲突与阻塞
+
+-
+
+## 用户确认与风险接受
+
+| 日期 | 确认对象 | 结论 | 风险范围 |
+|---|---|---|---|
+|  |  |  |  |
+
+## 最近状态迁移
+
+```text
+stage:
+from_status:
+to_status:
+trigger:
+rubric_result:
+invalidated_artifacts:
+next_action:
+gate:
+updated_at:
+```
 
 ## 下一步
 
-- 建议动作：
-- 需要确认：
+1.

@@ -20,10 +20,22 @@ required_files=(
   "workflows/end-to-end-prd.md"
   "workflows/single-module-task.md"
   "workflows/review-and-retrospective.md"
+  "workflows/runtime-state.md"
+  "workflows/context-and-evidence.md"
+  "workflows/approval-and-parallelism.md"
   "rubrics/direction-gate.md"
   "rubrics/product-logic-generic.md"
+  "rubrics/issue-severity.md"
+  "rubrics/reverse-engineering-quality.md"
+  "rubrics/prototype-output-quality.md"
   "templates/design-plan.md"
+  "templates/current-state.md"
+  "templates/stage-handoff.md"
   "templates/prd.md"
+  "evals/README.md"
+  "evals/scoring.md"
+  "evals/cases/generic-regression-cases.md"
+  "scripts/validate-framework.py"
 )
 
 for file in "${required_files[@]}"; do
@@ -39,6 +51,17 @@ if find . -name ".DS_Store" | grep -q .; then
   exit 1
 fi
 
+if grep -RInE '(/Users/[^/[:space:]]+/|/home/[^/[:space:]]+/|[A-Za-z]:\\Users\\[^\\[:space:]]+\\)' . \
+  --exclude-dir=.git \
+  --exclude=RELEASE_CHECKLIST.md \
+  --exclude=check-release.sh; then
+  echo "Found possible local absolute paths. Review before publishing."
+  exit 1
+fi
+
+python3 scripts/validate-framework.py
+
 echo "Required files OK."
 echo "No .DS_Store files found."
+echo "Framework structure OK."
 echo "Before publishing, also manually review RELEASE_CHECKLIST.md."

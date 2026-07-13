@@ -13,7 +13,7 @@
 → 问题收敛
 → 事实补证
 → 方案判断
-→ 人工确认
+→ 按风险选择 auto / notify / approve
 → 按需准备原型输入
 → PRD 生成
 → 审计、回退和经验沉淀
@@ -51,6 +51,10 @@
 6. 保持独立判断，不直接顺着用户给出的方案写。
 7. 每个阶段结束后，都要判断：通过、细化、回退、询问用户，还是沉淀经验。
 8. 长期经验沉淀必须经过用户确认。
+9. 阶段状态和事实必须可恢复、可追溯。
+10. 流程和 Rubric 修改必须经过 Eval 或真实任务验证。
+
+模型和推理等级由使用者启动任务时选择，FORGE Lite 不写死模型配置。
 
 ## 工作流路由
 
@@ -59,6 +63,12 @@
 - 端到端 PRD：`workflows/end-to-end-prd.md`
 - 单模块任务：`workflows/single-module-task.md`
 - 审计和复盘：`workflows/review-and-retrospective.md`
+
+所有任务共同使用：
+
+- 运行状态：`workflows/runtime-state.md`
+- 上下文与证据：`workflows/context-and-evidence.md`
+- 用户门禁与受控并行：`workflows/approval-and-parallelism.md`
 
 ## 核心模块
 
@@ -98,7 +108,7 @@ rubrics/direction-gate.md
 
 ## 复杂任务的起手输出
 
-复杂任务开始前，先输出设计计划：
+复杂任务开始前，先形成设计计划：
 
 - 任务等级
 - 真实问题
@@ -107,14 +117,29 @@ rubrics/direction-gate.md
 - 需要补充的证据
 - 建议跳过的模块及理由
 - 预期产物
-- 需要用户确认的节点
+- 工作量等级和决策风险
+- 各节点门禁：auto / notify / approve
 
-用户确认后再进入执行。
+设计计划不等于每次都要中断用户。用户已经授权、范围明确且低风险时可以直接执行并 notify；改变范围、对象模型或高成本研究时才 approve。
+
+## 阶段完成检查
+
+每个有意义的阶段结束后：
+
+1. 执行对应 Rubric 和必要风险扫描。
+2. 按 `rubrics/issue-severity.md` 判断 P0/P1/P2。
+3. 按运行状态协议记录状态迁移和失效产物。
+4. 选择下一步的 auto / notify / approve 门禁。
+5. 判断是否产生 Eval 或经验沉淀信号。
+
+逆向结论进入产品判断前必须执行 `rubrics/reverse-engineering-quality.md`。设计或原型工具输出必须先执行 `rubrics/prototype-output-quality.md`，再进入用户确认。
 
 ## 输出边界
 
 不要把私有业务知识写死在这个模板里。
 
 具体产品背景、知识库、代码库、功能逻辑 Rubric，都应该放在本地配置或私有文件里。
+
+通用框架行为用 `evals/` 中的虚构或公开案例验证。真实项目材料不得提交到开源仓库。
 
 如果团队有自己的 PRD 模板，应在 `config/templates.yaml` 中配置，不要直接改通用模板来绑定某个公司格式。
