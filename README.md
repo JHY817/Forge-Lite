@@ -1,190 +1,154 @@
 # FORGE Lite
 
-> 可配置的 AI 产品经理工作流 Agent 框架。  
-> A configurable AI product-management workflow agent framework.
+[![Validate](https://github.com/JHY817/Forge-Lite/actions/workflows/validate.yml/badge.svg)](https://github.com/JHY817/Forge-Lite/actions/workflows/validate.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/JHY817/Forge-Lite?include_prereleases)](https://github.com/JHY817/Forge-Lite/releases)
 
-FORGE Lite 是一套面向产品经理的通用 Agent 工作流框架。
+> 把通用 Coding Agent 配置成会判断阶段、核对事实、审查方向并产出 PRD 的产品经理工作流 Agent。
 
-它的目标不是“帮你快速套一个 PRD 模板”，而是让 AI 按产品工作的真实链路推进：
+FORGE Lite 是一套可配置的产品经理 Agent 工作流与评测框架。它不是独立运行的模型或应用；当它由能读取项目指令、文件和工具的宿主 Agent 加载后，才形成一个可运行的产品经理工作流 Agent 系统。
+
+## 它解决什么
+
+普通的“帮我写 PRD”很容易跳过需求收敛、现状核对和方向判断。FORGE Lite 要求 Agent 先回答：
+
+- 现在处于哪个阶段？
+- 哪些信息是事实，哪些只是推断？
+- 需要激活哪些模块，哪些应跳过？
+- 是否触碰对象模型、归属、权限、生命周期或状态机？
+- 当前应自动执行、执行后通知，还是等待用户批准？
+- 产物应通过、返工、回退还是沉淀？
 
 ```text
 需求输入
-→ 问题收敛
+→ 配置与阶段检查
+→ 需求收敛
 → 事实补证
-→ 方案判断
-→ 按风险设置用户门禁
-→ 原型准备
+→ 方向门禁
+→ 按风险选择 auto / notify / approve
+→ 按需准备原型输入
 → PRD 生成
-→ 审计返工
-→ 经验沉淀
+→ Rubric 审计、返工或回退
+→ Eval 与经验沉淀
 ```
 
-这套框架不绑定任何公司、任何产品、任何代码库。使用者需要自己配置产品背景、知识库、代码库和业务 Rubric。
+## 适合谁
 
-## 这是什么
+适合：
 
-FORGE Lite 是一个“产品经理数字化分身”的通用骨架。
+- 希望 Agent 参与需求判断、方案设计、逆向工程或 PRD 交付的产品经理。
+- 有自己的产品文档、代码库、业务 Rubric 或文档模板的团队。
+- 使用能够读取项目级指令和本地文件的 Agent 环境。
 
-它帮助 Agent 判断：
+不适合：
 
-- 现在任务处在哪个阶段。
-- 是否应该先收敛需求，而不是直接写 PRD。
-- 是否需要查产品现状、代码逻辑、数据或竞品。
-- 是否触碰对象模型、权限、生命周期、状态机等方向问题。
-- 是否应该进入方案设计。
-- 是否需要先准备原型设计输入。
-- PRD 是否可以生成。
-- 产物是否需要审计、返工、回退或沉淀。
-- 当前阶段和主产物能否在长任务中准确恢复。
-- 哪些动作可自动执行，哪些需要通知或批准。
-- 规则改造是否经过 Eval 验证。
-
-## 这不是什么
-
-FORGE Lite 不是：
-
-- 固定 PRD 模板。
-- 某个公司的内部工作流。
-- 某个产品的脱敏版规范。
-- 可以直接替代产品经理判断的自动化机器。
-- 内置业务知识库的完整 Agent。
-
-## 核心流程
-
-```text
-需求输入
-→ 判断任务类型和阶段
-→ 检查已有事实和上下文
-→ 判断需要激活哪些模块
-→ 输出设计计划并判断 auto / notify / approve
-→ 按需做现状理解 / 逆向工程 / 数据判断 / 竞品分析
-→ 进入方案设计
-→ 方向确认
-→ 按需进入原型准备和输出验收
-→ 生成 PRD
-→ 审计、返工、回退或沉淀
-```
-
-## 核心模块
-
-| 模块 | 作用 |
-|---|---|
-| 需求理解 | 收敛真实问题、目标用户、关键场景和本期边界 |
-| 产品现状理解 | 查清已有产品行为、文档、历史决策和约束 |
-| 逆向工程 | 当产品逻辑依赖代码时，检查实现事实 |
-| 数据分析判断 | 判断是否需要补数据，以及数据能支持什么结论 |
-| 竞品分析 | 针对具体产品问题做外部参照 |
-| 方案设计 | 形成推荐方向、取舍、风险和待确认点 |
-| 原型设计准备 | 为设计或原型工具准备结构化输入 |
-| PRD 生成 | 把已确认方案转成可交付的产品需求 |
-| 审计与沉淀 | 检查产物质量，决定返工、回退或沉淀经验 |
-
-框架同时提供：
-
-- 统一运行状态和回退失效协议；
-- 上下文装配与事实分级；
-- P0/P1/P2 问题严重度；
-- 逆向工程事实质量 Rubric；
-- 与工具无关的原型输出验收 Rubric；
-- 通用 Eval 案例、评分和结构校验。
-
-## 使用前需要配置什么
-
-FORGE Lite 默认不包含任何私有业务信息。你需要自己配置：
-
-- 产品背景
-- 用户角色
-- 核心对象
-- 关键业务流程
-- 知识库位置
-- 代码库位置
-- 团队自己的功能逻辑 Rubric
-- PRD 模板偏好
-- 本地经验沉淀目录
-
-配置示例在：
-
-```text
-config.example/
-```
-
-## 目录说明
-
-```text
-forge-lite/
-├── README.md                    # 项目介绍
-├── AGENTS.template.md            # Agent 指令模板
-├── config.example/               # 配置示例
-├── workflows/                    # 工作流
-├── modules/                      # 能力模块
-├── rubrics/                      # 通用检查标准
-├── templates/                    # 文档模板
-├── examples/                     # 虚构示例
-├── evals/                        # 通用黄金案例、评分和评测记录
-├── scripts/                      # 初始化与确定性校验
-└── docs/                         # 使用说明和开源注意事项
-```
+- 只想获得一份不需要事实核对的通用 PRD 模板。
+- 期待开箱即用的业务知识库或自动代替产品经理做最终决策。
+- 宿主工具无法读取项目指令、文件或执行必要工具。
 
 ## 快速开始
 
-如果你刚 clone 这个项目，先看：
-
-```text
-QUICKSTART.md
-```
-
-最短路径：
-
-1. 运行 `bash scripts/setup.sh`，生成本地 `config/`。
-2. 脚本会同时生成本地 `AGENTS.md`。
-3. 填写 `config/product-context.md`。
-4. 填写 `config/knowledge-base.yaml`。
-5. 按需填写 `config/codebase.yaml`。
-6. 按需填写 `config/rubric.yaml`。
-7. 按需填写 `config/templates.yaml`，替换为你的团队 PRD 模板。
-8. 让 Agent 先输出设计计划，并按风险判断是否需要确认。
-
-发布前本地检查：
+需要 Git、Bash 和 Python 3。克隆仓库后执行：
 
 ```bash
-bash scripts/check-release.sh
-python3 scripts/validate-framework.py
+git clone https://github.com/JHY817/Forge-Lite.git
+cd Forge-Lite
+bash scripts/setup.sh
+python3 scripts/validate-config.py
 ```
 
-不同任务入口：
+`setup.sh` 会生成本地 `config/` 和 `AGENTS.md`。初次校验预期会告诉你还需填写哪些内容；这是 onboarding，不是安装失败。
 
-- 从需求到 PRD：`workflows/end-to-end-prd.md`
-- 单点分析任务：`workflows/single-module-task.md`
-- 审 PRD 或方案：`workflows/review-and-retrospective.md`
+最少完成：
 
-## 开源边界
+1. `config/product-context.md`：产品、用户、核心对象、流程和约束。
+2. `config/knowledge-base.yaml`：至少一个可读的事实来源。
 
-这个仓库可以公开：
+然后再次执行：
 
-- 通用架构
-- 通用流程
-- 通用模块
-- 通用 Rubric
-- 通用模板
-- 虚构示例
-- 通用 Eval 和确定性校验
+```bash
+python3 scripts/validate-config.py
+```
 
-这个仓库不应该公开：
+完整步骤见 [QUICKSTART.md](QUICKSTART.md)。
 
-- 真实业务知识库
-- 内部代码库路径
-- 具体功能逻辑
-- 真实 PRD
-- 真实客户案例
+## 第一个任务
+
+```text
+请按 FORGE Lite 流程处理下面的需求。
+先检查配置和当前阶段，不要直接写 PRD。
+请说明需要激活的模块、需要补充的事实和本轮门禁。
+
+需求：
+我们希望把一个已有能力开放给新的用户角色。
+```
+
+配置完整时，Agent 应先输出类似下面的设计计划，而不是直接生成 PRD：
+
+```text
+当前阶段：需求理解 / 产品现状补证
+必须模块：需求理解、产品现状、方向门禁
+暂不激活：PRD 生成
+需要证据：现有角色模型、权限和生命周期
+本轮门禁：notify
+```
+
+如果配置仍是占位符，Agent 应停在配置引导，明确告诉用户要先补哪些内容。
+
+## 核心能力
+
+| 能力 | 作用 |
+|---|---|
+| 配置门禁 | 防止在产品背景仍是占位符时继续设计 |
+| 需求理解 | 收敛真实问题、用户、场景和本期边界 |
+| 产品现状 | 核对已有能力、历史决策和约束 |
+| 逆向工程 | 在产品判断依赖代码时检查实现事实 |
+| 数据与竞品 | 判断是否需要补充内外部证据 |
+| 方向门禁 | 检查对象、归属、权限、生命周期和核心路径 |
+| 原型准备 | 向设计或原型工具交付结构化输入并验收输出 |
+| PRD 生成 | 把已确认方案转成可评审、可实现、可测试的规格 |
+| Loop + Rubric | 判断通过、返工、回退、风险接受或沉淀 |
+| Eval | 检查新规则是否真正改善 Agent 行为 |
+
+## 配置与扩展
+
+仓库不包含任何私有业务知识。使用者需在本地配置：
+
+- 产品背景与核心对象
+- 知识库和事实来源
+- 按需使用的代码库
+- 业务专属 Rubric
+- 团队文档模板
 - 私有经验沉淀
-- 公司专属设计规范
 
-## 当前状态
+真实配置位于已忽略的 `config/`、`private/` 和 `learning/`，不应提交到公开仓库。详细说明见 [docs/configuration-guide.md](docs/configuration-guide.md)。
 
-当前版本已包含任务路由、运行状态、证据管理、用户门禁、质量 Loop 和 Eval 基础。正文以中文为主；后续可逐步补充英文文档和更多公开评测案例。
+## 仓库导航
+
+- [QUICKSTART.md](QUICKSTART.md)：10 分钟安装与首次任务。
+- [PROJECT_INDEX.md](PROJECT_INDEX.md)：全部文件与规则归属。
+- [docs/concepts.md](docs/concepts.md)：核心概念。
+- [docs/collaboration-guide.md](docs/collaboration-guide.md)：人与 Agent 的协作方式。
+- [examples/fictional-product/README.md](examples/fictional-product/README.md)：虚构产品示例。
+- [evals/README.md](evals/README.md)：行为验证和回归方法。
+
+## 当前边界
+
+- 目前为中文优先的早期版本。
+- 它不提供自己的模型、工具运行时或业务知识库。
+- 实际能力取决于宿主 Agent 的文件、代码、网络和工具权限。
+- 公开 Eval 只覆盖通用回归场景，团队仍需要自己的私有案例。
+
+## 开发与发布检查
+
+```bash
+python3 scripts/validate-framework.py
+bash scripts/smoke-test-install.sh
+bash scripts/check-release.sh
+```
+
+贡献说明见 [CONTRIBUTING.md](CONTRIBUTING.md)，安全问题见 [SECURITY.md](SECURITY.md)。
 
 ## License
 
-本项目使用 MIT License。
-
-如果你在自己的项目里复用或修改，请保留 `LICENSE` 中的版权和许可声明。
+[MIT License](LICENSE)

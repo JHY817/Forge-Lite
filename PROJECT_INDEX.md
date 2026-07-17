@@ -7,7 +7,6 @@
 - `README.md`：项目介绍，说明 FORGE Lite 是什么、怎么用。
 - `QUICKSTART.md`：clone 后快速配置和跑通第一个任务。
 - `AGENTS.template.md`：Agent 指令模板，以后可以复制到具体项目里使用。
-- `FORGE Lite开源版定位与语言策略.md`：开源版的定位、边界和语言策略。
 - `RELEASE_CHECKLIST.md`：发布到 GitHub 前的检查清单。
 
 ## 配置示例
@@ -86,11 +85,18 @@
 - `.github/ISSUE_TEMPLATE/`：Issue 模板。
 - `.github/pull_request_template.md`：PR 模板。
 
+## 脚本
+
+- `scripts/setup.sh`：生成本地配置和 `AGENTS.md`。
+- `scripts/validate-config.py`：检查首次使用必需配置和按需配置。
+- `scripts/validate-framework.py`：检查框架结构和规则链。
+- `scripts/smoke-test-install.sh`：在干净临时目录演练首次安装和重复安装。
+- `scripts/check-release.sh`：发布前检查敏感边界、安装链路和框架结构。
+
 ## 示例
 
 - `examples/fictional-product/README.md`：虚构产品 TaskBoard 示例。
 
-## 为什么文件名还是英文
+## 为什么文件名使用英文
 
-文件名保留英文是为了以后开源到 GitHub 时更通用，也方便其他工具识别。  
-但正文可以中文优先，等框架稳定后再补英文版。
+英文文件名更容易被跨平台工具和自动化脚本稳定识别。当前正文中文优先，英文版作为后续扩展，不影响中文使用链路。

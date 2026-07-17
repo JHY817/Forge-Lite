@@ -1,0 +1,30 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  framework:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate framework
+        run: python3 scripts/validate-framework.py
+
+      - name: Smoke-test installation
+        run: bash scripts/smoke-test-install.sh
+
+      - name: Check release boundaries
+        run: bash scripts/check-release.sh

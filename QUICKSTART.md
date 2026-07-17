@@ -1,168 +1,106 @@
-# 快速上手
+# 10 分钟快速上手
 
-目标：让你 clone 这个仓库后，在 10 分钟内完成基础配置，并让 Agent 能按 FORGE Lite 流程开始工作。
+目标：从全新 Clone 到让宿主 Agent 按 FORGE Lite 流程处理第一个产品任务。
 
-## 1. 复制配置文件
+## 1. 准备环境
 
-在仓库根目录执行：
+需要：
+
+- Git
+- Bash
+- Python 3.10 或更高版本
+- 能够读取项目级指令和本地文件的 Agent 环境
+
+FORGE Lite 本身不安装模型，也不提供独立的 Agent 运行时。
+
+## 2. Clone 与初始化
 
 ```bash
+git clone https://github.com/JHY817/Forge-Lite.git
+cd Forge-Lite
 bash scripts/setup.sh
 ```
 
-它会把：
+安装脚本会：
 
-```text
-config.example/
-```
+- 把 `config.example/` 复制为已忽略的本地 `config/`。
+- 把 `AGENTS.template.md` 复制为已忽略的本地 `AGENTS.md`。
+- 保留已经存在的配置，重复执行不会覆盖。
 
-复制为：
-
-```text
-config/
-```
-
-同时它会把：
-
-```text
-AGENTS.template.md
-```
-
-复制为本地使用的：
-
-```text
-AGENTS.md
-```
-
-如果你不想运行脚本，也可以手动复制。
-
-## 2. 填写产品背景
-
-编辑：
-
-```text
-config/product-context.md
-```
-
-至少填写：
-
-- 产品名称
-- 产品类型
-- 目标用户
-- 核心对象
-- 关键流程
-- 已知约束
-
-如果这一步不填，Agent 很容易给出泛泛建议。
-
-## 3. 配置知识库
-
-编辑：
-
-```text
-config/knowledge-base.yaml
-```
-
-把你的产品文档、帮助文档、设计文档、历史 PRD 等来源填进去。
-
-可以先只配置一个本地文档目录。
-
-## 4. 配置代码库
-
-编辑：
-
-```text
-config/codebase.yaml
-```
-
-如果你的任务需要逆向工程，就配置相关代码库。
-
-如果暂时不需要代码分析，可以先保留占位，并在使用时告诉 Agent 跳过逆向工程。
-
-## 5. 配置业务 Rubric
-
-编辑：
-
-```text
-config/rubric.yaml
-```
-
-公开仓库只提供通用 Rubric。  
-你的业务专属检查项应该放到私有文件里，再在这里配置路径。
-
-## 6. 配置 PRD 等文档模板
-
-编辑：
-
-```text
-config/templates.yaml
-```
-
-默认会使用仓库里的通用模板：
-
-```text
-templates/prd.md
-```
-
-如果你有自己的团队 PRD 模板，可以把 `config/templates.yaml` 里的 `prd.path` 改成你的模板路径。
-
-## 7. 复制 Agent 指令模板
-
-如果你已经运行过 `bash scripts/setup.sh`，这一步已经自动完成。
-
-如果你要手动部署，把：
-
-```text
-AGENTS.template.md
-```
-
-复制到你的 Agent 工作区，并改名为：
-
-```text
-AGENTS.md
-```
-
-然后按你的工具要求加载它。
-
-## 8. 让 Agent 跑第一个任务
-
-你可以这样对 Agent 说：
-
-```text
-请按 FORGE Lite 流程处理这个需求。
-先不要直接写 PRD，先判断任务阶段、需要哪些模块、需要补哪些事实，然后输出设计计划让我确认。
-
-需求：
-我们希望把一个已有能力开放给新的用户角色，看看应该怎么设计。
-```
-
-Agent 应该先输出设计计划，而不是直接生成 PRD。
-
-## 9. 判断是否跑通
-
-如果流程跑通，Agent 至少应该做到：
-
-- 识别这是产品设计任务。
-- 不直接写 PRD。
-- 先判断任务阶段。
-- 输出需要激活的模块。
-- 说明是否需要方向门禁。
-- 明确需要哪些产品事实、代码事实或用户确认。
-
-如果 Agent 直接开始写 PRD，说明指令没有正确加载，或项目上下文不足。
-
-## 10. 发布前检查
-
-如果你准备把仓库推到 GitHub，先运行：
+## 3. 检查配置状态
 
 ```bash
+python3 scripts/validate-config.py
+```
+
+刚安装时，校验器会返回“需要配置”并列出占位项。这说明配置门禁正常工作。
+
+默认命令会输出 `CONFIG_STATUS=needs_configuration` 但保持正常退出，便于 Agent 继续向用户说明下一步。CI 或自动化脚本可使用 `python3 scripts/validate-config.py --strict` 把配置未完成视为非零退出。
+
+## 4. 填写必需配置
+
+先完成 `config/product-context.md`：
+
+- 产品名称和类型
+- 目标用户和核心任务
+- 核心对象和角色
+- 关键流程和生命周期
+- 已知约束和非目标
+
+再完成 `config/knowledge-base.yaml`，至少提供一个 Agent 能够读取的事实来源。
+
+## 5. 按需配置
+
+- `config/codebase.yaml`：只有任务需要代码逆向时才必须。
+- `config/rubric.yaml`：放置你的私有产品逻辑和表达规范。
+- `config/templates.yaml`：可以继续使用默认模板，也可指向团队私有模板。
+
+再次检查：
+
+```bash
+python3 scripts/validate-config.py
+```
+
+必需配置通过后，产品设计任务才可以继续。
+
+## 6. 让宿主 Agent 加载指令
+
+默认安装生成 `AGENTS.md`。如果你的 Agent 工具使用不同的项目指令文件名，请按工具要求复制或引用 `AGENTS.md`，不要维护两套不同规则。
+
+## 7. 执行第一个任务
+
+```text
+请按 FORGE Lite 流程处理下面的需求。
+先检查配置和当前阶段，不要直接写 PRD。
+
+需求：
+我们希望把一个已有能力开放给新的用户角色，请判断需要核对哪些现状，以及是否应该进入 PRD。
+```
+
+## 8. 判断是否跑通
+
+配置不完整时，Agent 应：
+
+- 明确进入配置引导。
+- 指出哪些必需文件还是占位符。
+- 不把占位符当成产品事实。
+- 不直接进入方案或 PRD。
+
+配置完整时，Agent 应：
+
+- 识别任务类型和当前阶段。
+- 说明需要激活和跳过的模块。
+- 区分产品事实、用户陈述、推断和待确认项。
+- 检查是否命中方向门禁。
+- 输出设计计划和 auto / notify / approve 判断。
+- 在方向未确认前不生成 PRD。
+
+## 9. 本地自检
+
+```bash
+python3 scripts/validate-framework.py
+bash scripts/smoke-test-install.sh
 bash scripts/check-release.sh
 ```
 
-它会检查：
-
-- GitHub 必备文件是否存在。
-- 核心流程文件是否存在。
-- 是否还有 `.DS_Store`。
-
-然后再按 `RELEASE_CHECKLIST.md` 做人工复查。
+如果你要替换模板或扩展 Rubric，先阅读 [docs/configuration-guide.md](docs/configuration-guide.md) 和 [docs/rule-ownership.md](docs/rule-ownership.md)。

@@ -19,6 +19,15 @@ config/
 
 `config/` 默认会被 `.gitignore` 忽略，不建议提交到 GitHub。
 
+推荐直接运行：
+
+```bash
+bash scripts/setup.sh
+python3 scripts/validate-config.py
+```
+
+初次校验会列出尚未替换的占位符。必需配置未通过前，Agent 应保持在配置引导阶段。
+
 ## 2. 配置产品背景
 
 编辑：
@@ -145,3 +154,10 @@ product-context.md
 ```
 
 先让 Agent 知道“这是个什么产品”，再让它知道“去哪里查事实”。
+
+## 9. 配置通过标准
+
+- `product-context.md` 不再包含 `<...>` 占位符。
+- `knowledge-base.yaml` 至少有一个非占位的知识源。
+- 需要逆向工程时，`codebase.yaml` 中目标仓库路径真实可读。
+- 私有 Rubric 或模板尚未配置时，Agent 应显式标注并使用公开默认值，不伪造团队规则。

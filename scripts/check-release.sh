@@ -36,6 +36,9 @@ required_files=(
   "evals/scoring.md"
   "evals/cases/generic-regression-cases.md"
   "scripts/validate-framework.py"
+  "scripts/validate-config.py"
+  "scripts/smoke-test-install.sh"
+  ".github/workflows/validate.yml"
 )
 
 for file in "${required_files[@]}"; do
@@ -59,9 +62,27 @@ if grep -RInE '(/Users/[^/[:space:]]+/|/home/[^/[:space:]]+/|[A-Za-z]:\\Users\\[
   exit 1
 fi
 
+if grep -RInE '(https?://[^[:space:]]*(kms\.|\.feishu\.cn/(wiki|docx|sheets|base)/)|<cite[[:space:]][^>]*doc-id=)' . \
+  --exclude-dir=.git \
+  --exclude=check-release.sh \
+  --exclude=open-source-checklist.md \
+  --exclude=RELEASE_CHECKLIST.md; then
+  echo "Found possible private documentation links or embedded document tokens."
+  exit 1
+fi
+
+if [ -n "${FORGE_RELEASE_DENY_PATTERN:-}" ]; then
+  if grep -RInE "$FORGE_RELEASE_DENY_PATTERN" . --exclude-dir=.git; then
+    echo "Found content matching FORGE_RELEASE_DENY_PATTERN."
+    exit 1
+  fi
+fi
+
 python3 scripts/validate-framework.py
+bash scripts/smoke-test-install.sh
 
 echo "Required files OK."
 echo "No .DS_Store files found."
 echo "Framework structure OK."
+echo "Install smoke test OK."
 echo "Before publishing, also manually review RELEASE_CHECKLIST.md."

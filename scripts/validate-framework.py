@@ -2,12 +2,17 @@
 """Validate deterministic FORGE Lite framework structure."""
 
 from pathlib import Path
+import re
 import sys
+from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
     "AGENTS.template.md",
+    "README.md",
+    "QUICKSTART.md",
+    "PROJECT_INDEX.md",
     "workflows/runtime-state.md",
     "workflows/context-and-evidence.md",
     "workflows/approval-and-parallelism.md",
@@ -23,6 +28,9 @@ REQUIRED = [
     "evals/README.md",
     "evals/scoring.md",
     "evals/cases/generic-regression-cases.md",
+    "scripts/validate-config.py",
+    "scripts/smoke-test-install.sh",
+    ".github/workflows/validate.yml",
 ]
 
 
@@ -44,13 +52,13 @@ def main() -> int:
                 errors.append(f"{relative} missing heading: {heading}")
 
     cases = (ROOT / "evals/cases/generic-regression-cases.md").read_text(encoding="utf-8")
-    if cases.count("EVAL-") < 10:
-        errors.append("fewer than 10 generic regression cases")
+    if cases.count("EVAL-") < 12:
+        errors.append("fewer than 12 generic regression cases")
 
     diagram_rule_files = {
         "modules/prd-generation.md": ["文档配图与平台写回", "lark-whiteboard", "实际预览"],
         "rubrics/prd-quality.md": ["图文协同与在线文档写回", "条件必过项"],
-        "templates/prd.md": ["配图并写回在线文档"],
+        "templates/prd.md": ["写回在线文档"],
         "evals/cases/generic-regression-cases.md": ["EVAL-011"],
     }
     for relative, phrases in diagram_rule_files.items():
@@ -58,6 +66,53 @@ def main() -> int:
         for phrase in phrases:
             if phrase not in text:
                 errors.append(f"diagram writeback rule disconnected: {relative} missing {phrase}")
+
+    configuration_rule_files = {
+        "AGENTS.template.md": ["配置门禁", "validate-config.py", "配置引导"],
+        "README.md": ["配置与阶段检查", "validate-config.py"],
+        "QUICKSTART.md": ["配置不完整时", "validate-config.py"],
+        "evals/cases/generic-regression-cases.md": ["EVAL-012"],
+    }
+    for relative, phrases in configuration_rule_files.items():
+        text = (ROOT / relative).read_text(encoding="utf-8")
+        for phrase in phrases:
+            if phrase not in text:
+                errors.append(f"configuration gate disconnected: {relative} missing {phrase}")
+
+    markdown_link = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+    for path in ROOT.rglob("*.md"):
+        if ".git" in path.parts:
+            continue
+        text = path.read_text(encoding="utf-8")
+        for raw_target in markdown_link.findall(text):
+            target = raw_target.strip().strip("<>")
+            if target.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            relative_target = unquote(target.split("#", 1)[0])
+            if relative_target and not (path.parent / relative_target).resolve().exists():
+                errors.append(
+                    f"broken Markdown link: {path.relative_to(ROOT)} -> {relative_target}"
+                )
+
+    index = (ROOT / "PROJECT_INDEX.md").read_text(encoding="utf-8")
+    for target in re.findall(r"`([^`]+\.(?:md|yaml|sh|py))`", index):
+        if target in {"AGENTS.md"} or target.startswith("config/"):
+            continue
+        if not (ROOT / target).exists():
+            errors.append(f"PROJECT_INDEX references missing file: {target}")
+
+    prd_template = (ROOT / "templates/prd.md").read_text(encoding="utf-8")
+    forbidden_template_markers = [
+        ".feishu.cn/",
+        "kms.",
+        "<cite",
+        "设计委员会",
+        "团队评审",
+        "帆软",
+    ]
+    for marker in forbidden_template_markers:
+        if marker.lower() in prd_template.lower():
+            errors.append(f"public PRD template contains private marker: {marker}")
 
     agents = (ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
     for reference in ["runtime-state.md", "context-and-evidence.md", "approval-and-parallelism.md"]:
@@ -74,8 +129,10 @@ def main() -> int:
     print(f"required files: {len(REQUIRED)}")
     print("runtime states: complete")
     print("quality rubrics: structured")
-    print("generic regression cases: >= 10")
+    print("generic regression cases: >= 12")
     print("PRD diagram writeback: rule chain complete")
+    print("configuration gate: rule chain complete")
+    print("Markdown links and public template: clean")
     return 0
 
 

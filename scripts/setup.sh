@@ -24,9 +24,9 @@ else
     mv "$CONFIG_DIR/codebase.example.yaml" "$CONFIG_DIR/codebase.yaml"
   fi
 
-if [ -f "$CONFIG_DIR/rubric.example.yaml" ]; then
-  mv "$CONFIG_DIR/rubric.example.yaml" "$CONFIG_DIR/rubric.yaml"
-fi
+  if [ -f "$CONFIG_DIR/rubric.example.yaml" ]; then
+    mv "$CONFIG_DIR/rubric.example.yaml" "$CONFIG_DIR/rubric.yaml"
+  fi
 
   if [ -f "$CONFIG_DIR/templates.example.yaml" ]; then
     mv "$CONFIG_DIR/templates.example.yaml" "$CONFIG_DIR/templates.yaml"
@@ -42,4 +42,6 @@ else
   echo "Created AGENTS.md from AGENTS.template.md."
 fi
 
-echo "Next: edit config/product-context.md, config/knowledge-base.yaml, config/codebase.yaml, config/rubric.yaml, and config/templates.yaml."
+echo "Next: edit config/product-context.md and config/knowledge-base.yaml."
+echo "Then run: python3 scripts/validate-config.py"
+echo "Codebase, private Rubric, and custom template settings can be completed when needed."

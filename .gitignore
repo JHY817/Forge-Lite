@@ -2,6 +2,8 @@
 **/.DS_Store
 AGENTS.md
 node_modules/
+__pycache__/
+*.pyc
 .env
 .env.*
 dist/

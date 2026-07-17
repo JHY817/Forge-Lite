@@ -31,6 +31,18 @@
 3. 说明为什么这个改动具有通用价值。
 4. 不要为了流程而增加流程；只有能减少真实歧义或风险时，才增加规则。
 
+## 本地验证
+
+提交 Pull Request 前运行：
+
+```bash
+python3 scripts/validate-framework.py
+bash scripts/smoke-test-install.sh
+bash scripts/check-release.sh
+```
+
+如果修改了流程、Rubric 或 Agent 路由，请同时补充 `evals/cases/` 或说明已用哪个现有案例验证。
+
 ## 语言
 
 中文内容可以接受。  
