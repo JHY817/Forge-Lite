@@ -32,6 +32,8 @@ required_files=(
   "templates/current-state.md"
   "templates/stage-handoff.md"
   "templates/prd.md"
+  "templates/diagram-brief.md"
+  "rubrics/diagram-visual-quality.md"
   "evals/README.md"
   "evals/scoring.md"
   "evals/cases/generic-regression-cases.md"

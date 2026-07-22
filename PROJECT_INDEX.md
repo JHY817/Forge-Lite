@@ -48,6 +48,7 @@
 - `rubrics/issue-severity.md`：P0/P1/P2、停止条件和复审范围。
 - `rubrics/reverse-engineering-quality.md`：逆向事实强度和证据质量。
 - `rubrics/prototype-output-quality.md`：通用原型输出保真、状态和 QA 验收。
+- `rubrics/diagram-visual-quality.md`：复杂正式配图的图义、层级、视觉系统和平台预览验收。
 
 ## 模板
 
@@ -58,6 +59,7 @@
 - `templates/product-design-brief.md`：原型设计 Brief 模板。
 - `templates/prd.md`：PRD 模板。
 - `templates/stage-handoff.md`：阶段交接模板。
+- `templates/diagram-brief.md`：复杂配图出图前的视觉简报。
 
 ## 文档
 

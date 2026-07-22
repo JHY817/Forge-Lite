@@ -141,7 +141,19 @@ learning/
 - 经验沉淀写入前先确认。
 - 能通用化的经验，后续再考虑抽象进公开 Rubric。
 
-## 8. 推荐配置顺序
+## 8. 配置可选出图能力
+
+FORGE Lite 不强制绑定特定出图工具。复杂架构图、数据流图、复合流程图和产品方案信息图需要高保真视觉时，推荐安装 Agent Skills 兼容的 `fireworks-tech-graph`：
+
+```bash
+npx skills add yizhiyanhua-ai/fireworks-tech-graph
+```
+
+也可以配置能够生成并校验 SVG + PNG 的等价 Skill。使用外部 Skill 前应检查其来源和代码；团队可以在私有配置中指定允许使用的工具。
+
+如果目标在线文档需要可编辑画板，还需配置对应平台的文档和画板工具。生成工具负责视觉源图，平台工具负责插入、转换、预览和回读；不要因为平台可编辑性要求静默牺牲视觉质量。
+
+## 9. 推荐配置顺序
 
 ```text
 product-context.md
@@ -155,7 +167,7 @@ product-context.md
 
 先让 Agent 知道“这是个什么产品”，再让它知道“去哪里查事实”。
 
-## 9. 配置通过标准
+## 10. 配置通过标准
 
 - `product-context.md` 不再包含 `<...>` 占位符。
 - `knowledge-base.yaml` 至少有一个非占位的知识源。

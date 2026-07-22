@@ -20,10 +20,12 @@ REQUIRED = [
     "rubrics/reverse-engineering-quality.md",
     "rubrics/prototype-output-quality.md",
     "rubrics/prd-quality.md",
+    "rubrics/diagram-visual-quality.md",
     "modules/prd-generation.md",
     "templates/prd.md",
     "templates/current-state.md",
     "templates/stage-handoff.md",
+    "templates/diagram-brief.md",
     "docs/rule-ownership.md",
     "evals/README.md",
     "evals/scoring.md",
@@ -56,10 +58,12 @@ def main() -> int:
         errors.append("fewer than 12 generic regression cases")
 
     diagram_rule_files = {
-        "modules/prd-generation.md": ["文档配图与平台写回", "lark-whiteboard", "实际预览"],
-        "rubrics/prd-quality.md": ["图文协同与在线文档写回", "条件必过项"],
+        "modules/prd-generation.md": ["文档配图与平台写回", "fireworks-tech-graph", "lark-whiteboard", "diagram-visual-quality.md"],
+        "rubrics/prd-quality.md": ["图文协同与在线文档写回", "条件必过项", "diagram-visual-quality.md"],
+        "rubrics/diagram-visual-quality.md": ["5 秒内", "PNG 预览", "不得静默降级"],
+        "templates/diagram-brief.md": ["一句话核心结论", "首选生成工具", "事实边界"],
         "templates/prd.md": ["写回在线文档"],
-        "evals/cases/generic-regression-cases.md": ["EVAL-011"],
+        "evals/cases/generic-regression-cases.md": ["EVAL-011", "高保真 Skill 已可用但未触发"],
     }
     for relative, phrases in diagram_rule_files.items():
         text = (ROOT / relative).read_text(encoding="utf-8")
@@ -130,7 +134,7 @@ def main() -> int:
     print("runtime states: complete")
     print("quality rubrics: structured")
     print("generic regression cases: >= 12")
-    print("PRD diagram writeback: rule chain complete")
+    print("PRD high-fidelity diagram writeback: rule chain complete")
     print("configuration gate: rule chain complete")
     print("Markdown links and public template: clean")
     return 0

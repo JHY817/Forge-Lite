@@ -9,6 +9,7 @@
 | 端到端、单模块、审计编排 | `workflows/` 对应流程 | Agent 模板只负责路由 |
 | 模块内部执行 | `modules/` 对应模块 | 流程不复制执行细节 |
 | 阶段和产物质量 | `rubrics/` | 模块只引用，不复制判定表 |
+| 正式文档配图视觉质量 | `rubrics/diagram-visual-quality.md` | PRD 模块只定义工具路由；视觉简报只定义输入字段 |
 | 当前任务事实 | 使用者项目中的 `current-state.md` | 历史文档不能覆盖 |
 | Agent 行为验证 | `evals/` | 经验记录不能冒充评测 |
 
